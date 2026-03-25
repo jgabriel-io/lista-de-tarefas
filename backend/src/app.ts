@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.routes';
 import taskRoutes from './routes/task.routes';
+import { notFoundMiddleware } from './middlewares/notFound.middleware';
+import { errorMiddleware } from './middlewares/error.middleware';
 
 const app = express();
 
@@ -14,5 +16,8 @@ app.get('/health', (_req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
 
 export default app;

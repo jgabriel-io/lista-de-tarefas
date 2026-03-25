@@ -6,13 +6,13 @@ export async function registerUser(email: string, password: string) {
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) throw new Error('Email already in use');
 
-  const hashed = await bcrypt.hash(password, 10);
+  const hashed = await bcrypt.hash(password, 12);
   const user = await prisma.user.create({ data: { email, password: hashed } });
 
   return { id: user.id, email: user.email };
 }
 
-export async function loginUser(email: string, password: string) {
+export async function loginUserLegacy(email: string, password: string) {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error('Invalid credentials');
 
