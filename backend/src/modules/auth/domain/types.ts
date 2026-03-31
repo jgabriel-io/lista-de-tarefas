@@ -13,3 +13,11 @@ export type LoginResult = {
   user: { id: number; email: string };
 };
 
+export type RegisterResult = {
+  user: { id: number; email: string };
+};
+
+export type RefreshResult = {
+  accessToken: string;
+};
+

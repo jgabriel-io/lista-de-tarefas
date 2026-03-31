@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
-import { ForbiddenError, UnauthorizedError } from '../modules/auth/domain/errors';
+import { ConflictError, ForbiddenError, UnauthorizedError } from '../modules/auth/domain/errors';
+import { TaskNotFoundError, TaskValidationError } from '../modules/tasks/domain/errors';
 
 export function errorMiddleware(err: unknown, _req: Request, res: Response, _next: NextFunction): void {
   if (err instanceof ZodError) {
@@ -18,6 +19,21 @@ export function errorMiddleware(err: unknown, _req: Request, res: Response, _nex
 
   if (err instanceof ForbiddenError) {
     res.status(403).json({ message: err.message });
+    return;
+  }
+
+  if (err instanceof TaskNotFoundError) {
+    res.status(404).json({ message: err.message });
+    return;
+  }
+
+  if (err instanceof ConflictError) {
+    res.status(409).json({ message: err.message });
+    return;
+  }
+
+  if (err instanceof TaskValidationError) {
+    res.status(400).json({ message: err.message });
     return;
   }
 

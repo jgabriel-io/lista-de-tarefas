@@ -10,9 +10,18 @@ export type RefreshTokenRecord = {
   createdAt: Date;
 };
 
+export type CreateUserData = {
+  email: string;
+  passwordHash: string;
+};
+
 export interface AuthRepository {
   findUserForAuthByEmail(email: string): Promise<(UserAuthView & { passwordHash: string }) | null>;
+  findUserByEmail(email: string): Promise<{ id: number; email: string } | null>;
+  createUser(data: CreateUserData): Promise<{ id: number; email: string }>;
   updateLoginAudit(userId: number, data: { lastLoginAt: Date; lastLoginIp: string | null }): Promise<void>;
   createRefreshToken(data: { userId: number; tokenHash: string; ipAddress: string | null; expiresAt: Date }): Promise<RefreshTokenRecord>;
+  findRefreshToken(tokenHash: string): Promise<RefreshTokenRecord | null>;
+  revokeRefreshToken(tokenHash: string): Promise<void>;
 }
 

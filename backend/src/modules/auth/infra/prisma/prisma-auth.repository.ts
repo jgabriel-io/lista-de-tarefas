@@ -1,5 +1,5 @@
 import prisma from '../../../../lib/prisma';
-import type { AuthRepository, RefreshTokenRecord } from '../../domain/repositories';
+import type { AuthRepository, CreateUserData, RefreshTokenRecord } from '../../domain/repositories';
 import type { UserAuthView } from '../../domain/types';
 
 export class PrismaAuthRepository implements AuthRepository {
@@ -26,6 +26,21 @@ export class PrismaAuthRepository implements AuthRepository {
     };
   }
 
+  async findUserByEmail(email: string): Promise<{ id: number; email: string } | null> {
+    return prisma.user.findUnique({
+      where: { email },
+      select: { id: true, email: true },
+    });
+  }
+
+  async createUser(data: CreateUserData): Promise<{ id: number; email: string }> {
+    const user = await prisma.user.create({
+      data: { email: data.email, password: data.passwordHash },
+      select: { id: true, email: true },
+    });
+    return user;
+  }
+
   async updateLoginAudit(userId: number, data: { lastLoginAt: Date; lastLoginIp: string | null }): Promise<void> {
     await prisma.user.update({
       where: { id: userId },
@@ -46,6 +61,19 @@ export class PrismaAuthRepository implements AuthRepository {
         ipAddress: data.ipAddress,
         expiresAt: data.expiresAt,
       },
+    });
+  }
+
+  async findRefreshToken(tokenHash: string): Promise<RefreshTokenRecord | null> {
+    return prisma.refreshToken.findUnique({
+      where: { tokenHash },
+    });
+  }
+
+  async revokeRefreshToken(tokenHash: string): Promise<void> {
+    await prisma.refreshToken.update({
+      where: { tokenHash },
+      data: { revokedAt: new Date() },
     });
   }
 }

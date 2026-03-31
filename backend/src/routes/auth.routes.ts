@@ -1,12 +1,11 @@
 import { Router } from 'express';
-import { register } from '../controllers/auth.controller';
 import rateLimit from 'express-rate-limit';
 import { loginController } from '../modules/auth/presentation/controllers/login.controller';
-
+import { logoutController } from '../modules/auth/presentation/controllers/logout.controller';
+import { refreshController } from '../modules/auth/presentation/controllers/refresh.controller';
+import { registerController } from '../modules/auth/presentation/controllers/register.controller';
 
 const router = Router();
-
-router.post('/register', register);
 
 const loginRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -15,7 +14,9 @@ const loginRateLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// novo login (Zod + access/refresh tokens + auditoria + refresh persistido)
+router.post('/register', registerController);
 router.post('/login', loginRateLimiter, loginController);
+router.post('/logout', logoutController);
+router.post('/refresh', refreshController);
 
 export default router;
