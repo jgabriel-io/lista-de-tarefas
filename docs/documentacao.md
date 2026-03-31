@@ -4,6 +4,16 @@
 
 ---
 
+## Histórico de Revisões
+
+| Data | Versão | Descrição | Autor |
+|------|--------|-----------|-------|
+| 2026 | 1.0 | Definição inicial do documento de testes | João Gabriel e Rhuan |
+| 2026 | 1.1 | Adição dos scripts Pytest e resultados de execução | João Gabriel e Rhuan |
+| 2026 | 1.2 | Revisão final e consolidação dos resultados | João Gabriel e Rhuan |
+
+---
+
 ## Identificação
 
 | Campo | Informação |
@@ -221,6 +231,40 @@ RefreshToken
 
 ---
 
+## Estratégias de Testes
+
+### Teste de Unidade
+- **Objetivo:** Validar services e regras de negócio de forma isolada
+- **Técnica:** Enviar entradas válidas e inválidas para cada endpoint e verificar respostas
+- **Critério de finalização:** Todos os cenários retornam os status codes e mensagens esperados
+
+### Teste de Integração
+- **Objetivo:** Verificar o fluxo de dados entre os módulos (Auth → Tasks)
+- **Técnica:** Executar sequências de operações que envolvem múltiplos módulos
+- **Critério de finalização:** Os dados fluem corretamente entre os módulos sem inconsistências
+
+### Teste de Sistema
+- **Objetivo:** Executar o fluxo completo do usuário de ponta a ponta
+- **Técnica:** Simular o comportamento real de um usuário (registro → login → CRUD → logout)
+- **Critério de finalização:** Todas as operações são realizadas com sucesso em sequência
+
+### Teste de Aceitação
+- **Objetivo:** Validar diretamente os critérios dos Requisitos Funcionais (RF01-RF08)
+- **Técnica:** Verificar cada requisito funcional com dados válidos
+- **Critério de finalização:** Todos os requisitos funcionais estão implementados e funcionando
+
+### Teste de Regressão
+- **Objetivo:** Garantir que novas funcionalidades não quebram o código existente
+- **Técnica:** Reexecutar casos de teste após alterações no sistema
+- **Critério de finalização:** Funcionalidades previamente aprovadas continuam funcionando
+
+### Teste de Desempenho
+- **Objetivo:** Medir o tempo de resposta dos endpoints críticos
+- **Técnica:** Cronometrar requisições e comparar com limites aceitáveis
+- **Critério de finalização:** Login < 2s, listagem e criação de tarefas < 1s
+
+---
+
 ## Etapa 3 — Casos de Teste
 
 ### 3.1 Módulo de Autenticação
@@ -371,6 +415,26 @@ venv/bin/pytest test_performance.py -v
 | ID | Defeito | Causa | Correção |
 |----|---------|-------|----------|
 | BUG01 | Campos de edição vinham vazios ao clicar em "Editar" | `useState` não atualiza quando prop muda | Substituído por `useEffect` observando a prop `task` |
+
+### 5.4 Modelo de Reportação de Erro
+
+Padrão adotado para documentar defeitos encontrados:
+
+**SUMMARY:** [BUG] `<Nome do erro>`
+
+**DESCRIPTION:** Descrever o procedimento de teste utilizado, com o passo-a-passo para reproduzir o erro.
+
+**ADDITIONAL INFORMATION:** Observações relevantes ou suspeita da origem do erro.
+
+**Exemplo — BUG01:**
+
+| Campo | Conteúdo |
+|-------|----------|
+| Summary | [BUG] Campos de edição vinham vazios |
+| Description | Ao clicar em "Editar" em uma tarefa existente, os campos de título e descrição do formulário apareciam vazios em vez de preenchidos com os valores atuais da tarefa |
+| Additional Info | Suspeita: `useState` inicializa apenas uma vez, não reagindo a mudanças na prop `task` |
+| Correção | Substituído `useState` por `useEffect` observando a prop `task` |
+| Status | ✅ Resolvido |
 
 ---
 
