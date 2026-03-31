@@ -139,19 +139,21 @@ O frontend estará rodando em `http://localhost:3000`
 
 ## Testes
 
-### Testar API manualmente
-```bash
-cd backend
-chmod +x test-api.sh
-./test-api.sh
-```
-
 ### Testes automatizados (Pytest)
 ```bash
+# Criar ambiente virtual
 cd tests_pytest
-pip install -r requirements.txt
-pytest
+python3 -m venv venv
+venv/bin/pip install -r requirements.txt
+
+# Iniciar backend em modo teste (Terminal 1)
+cd backend && NODE_ENV=test npm run dev
+
+# Executar testes (Terminal 2)
+cd tests_pytest && venv/bin/pytest -v
 ```
+
+29 testes automatizados cobrindo: autenticação, tarefas, integração e desempenho.
 
 ---
 
@@ -182,16 +184,11 @@ pytest
 
 ---
 
-## Documentação Adicional
+## Documentação
 
 - `docs/requisitos.md` - Requisitos funcionais, não funcionais e regras de negócio
-- `docs/sprints.md` - Plano de desenvolvimento
-- `docs/validacao-backend.md` - Validação da implementação
-- `docs/MIGRACAO-COMPLETA.md` - Detalhes da migração para arquitetura modular
-- `docs/QUICK-START.md` - Guia rápido de instalação
-- `docs/COMO-TESTAR.md` - Instruções de teste
-- `docs/DEPLOY.md` - Guia de deploy
-- `docs/STATUS-PROJETO.md` - Status atual do projeto
+- `docs/documentacao.md` - Plano de testes, casos de teste e relatório final
+- `docs/apresentacao-task-manager.pdf` - Slides da apresentação
 
 ---
 
