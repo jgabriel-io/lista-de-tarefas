@@ -184,10 +184,14 @@ pytest
 
 ## Documentação Adicional
 
-- `requisitos.md` - Requisitos funcionais, não funcionais e regras de negócio
-- `sprints.md` - Plano de desenvolvimento
-- `validacao-backend.md` - Validação da implementação
-- `MIGRACAO-COMPLETA.md` - Detalhes da migração para arquitetura modular
+- `docs/requisitos.md` - Requisitos funcionais, não funcionais e regras de negócio
+- `docs/sprints.md` - Plano de desenvolvimento
+- `docs/validacao-backend.md` - Validação da implementação
+- `docs/MIGRACAO-COMPLETA.md` - Detalhes da migração para arquitetura modular
+- `docs/QUICK-START.md` - Guia rápido de instalação
+- `docs/COMO-TESTAR.md` - Instruções de teste
+- `docs/DEPLOY.md` - Guia de deploy
+- `docs/STATUS-PROJETO.md` - Status atual do projeto
 
 ---
 
