@@ -1,0 +1,25 @@
+# Python
+tests_pytest/venv/
+tests_pytest/__pycache__/
+tests_pytest/.pytest_cache/
+**/__pycache__/
+*.pyc
+
+# Node
+node_modules/
+dist/
+
+# Env
+.env
+.env.local
+
+# Database
+*.db
+*.db-journal
+
+# Next.js
+.next/
+out/
+
+# OS
+.DS_Store
