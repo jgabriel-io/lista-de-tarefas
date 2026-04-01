@@ -10,27 +10,27 @@ import requests
 def test_login_response_time(base_url, registered_user):
     start = time.time()
     response = requests.post(f"{base_url}/auth/login", json=registered_user)
-    elapsed = time.time() - start
+    elapsed = time.time() - start                   # mede o tempo total da requisição
 
     assert response.status_code == 200
-    assert elapsed < 2.0, f"Login demorou {elapsed:.2f}s (limite: 2s)"
+    assert elapsed < 2.0, f"Login demorou {elapsed:.2f}s (limite: 2s)"  # login deve responder em até 2 segundos
 
 
 # CT26 — Tempo de resposta ao listar tarefas
 def test_list_tasks_response_time(base_url, auth_headers):
     start = time.time()
     response = requests.get(f"{base_url}/tasks", headers=auth_headers)
-    elapsed = time.time() - start
+    elapsed = time.time() - start                   # mede o tempo total da requisição
 
     assert response.status_code == 200
-    assert elapsed < 1.0, f"Listagem demorou {elapsed:.2f}s (limite: 1s)"
+    assert elapsed < 1.0, f"Listagem demorou {elapsed:.2f}s (limite: 1s)"  # listagem deve responder em até 1 segundo
 
 
 # CT27 — Tempo de resposta ao criar tarefa
 def test_create_task_response_time(base_url, auth_headers):
     start = time.time()
     response = requests.post(f"{base_url}/tasks", json={"title": "Tarefa de performance"}, headers=auth_headers)
-    elapsed = time.time() - start
+    elapsed = time.time() - start                   # mede o tempo total da requisição
 
     assert response.status_code == 201
-    assert elapsed < 1.0, f"Criação demorou {elapsed:.2f}s (limite: 1s)"
+    assert elapsed < 1.0, f"Criação demorou {elapsed:.2f}s (limite: 1s)"  # criação deve responder em até 1 segundo
